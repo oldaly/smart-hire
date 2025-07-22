@@ -34,11 +34,10 @@ namespace JobService
 
         public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
         {
+            var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN") ?? "*";
             // Handle CORS preflight request
             if (request.HttpMethod == "OPTIONS")
             {
-                var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN") ?? "*";
-
                 return new APIGatewayProxyResponse
                 {
                     StatusCode = (int)HttpStatusCode.OK,
@@ -81,7 +80,7 @@ namespace JobService
                 Headers = new Dictionary<string, string>
                 {
                     { "Content-Type", "application/json" },
-                    { "Access-Control-Allow-Origin", "http://localhost:4200" },
+                    { "Access-Control-Allow-Origin", allowedOrigin },
                     { "Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token" },
                     { "Access-Control-Allow-Methods", "GET,OPTIONS" }
                 }
