@@ -5,6 +5,14 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHire.Shared", "SmartHire.Shared\SmartHire.Shared.csproj", "{2E4D7006-2024-414B-8048-50AC975AFFB7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{6326B788-CFE2-45B1-AA36-1034E7AC9DC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "job-service", "job-service", "{90BD0280-B48B-48D0-84DC-CA7206D5064B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DD1A751F-81F2-4002-87C5-A625C12EB02F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobService", "services\job-service\src\JobService\JobService.csproj", "{73B6A54B-1DC4-46F7-9C79-7D8FE7C20EDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +26,14 @@ Global
 		{2E4D7006-2024-414B-8048-50AC975AFFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E4D7006-2024-414B-8048-50AC975AFFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E4D7006-2024-414B-8048-50AC975AFFB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B6A54B-1DC4-46F7-9C79-7D8FE7C20EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B6A54B-1DC4-46F7-9C79-7D8FE7C20EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B6A54B-1DC4-46F7-9C79-7D8FE7C20EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B6A54B-1DC4-46F7-9C79-7D8FE7C20EDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90BD0280-B48B-48D0-84DC-CA7206D5064B} = {6326B788-CFE2-45B1-AA36-1034E7AC9DC5}
+		{DD1A751F-81F2-4002-87C5-A625C12EB02F} = {90BD0280-B48B-48D0-84DC-CA7206D5064B}
+		{73B6A54B-1DC4-46F7-9C79-7D8FE7C20EDC} = {DD1A751F-81F2-4002-87C5-A625C12EB02F}
 	EndGlobalSection
 EndGlobal
