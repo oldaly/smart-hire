@@ -9,13 +9,27 @@ obj/
 .vscode/
 .idea/
 
-# user-specific files
+# User-specific files
 *.user
 *.suo
 
-# local secrets and configs
+# Local secrets and configs
 *.local
 *.env
 
-# npm/node if any
+# npm/node modules and logs
 node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular build outputs
+dist/
+tmp/
+out-tsc/
+
+# Angular CLI cache
+.angular/cache/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
