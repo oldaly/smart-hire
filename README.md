@@ -34,6 +34,7 @@ Each microservice is independently deployable, runs as AWS Lambda functions trig
   `https://b2vn315z91.execute-api.ap-southeast-2.amazonaws.com/Prod/jobs`
 
 ---
+📄 [Decision Log](docs/decision_log.md)
 
 ## 12-Factor App Compliance Checklist
 
