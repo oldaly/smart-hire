@@ -1,4 +1,4 @@
-﻿namespace HireMe.Shared;
+﻿namespace SmartHire.Shared;
 
 public class Class1
 {
