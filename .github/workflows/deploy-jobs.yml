@@ -1,0 +1,17 @@
+name: Deploy Jobs Service
+
+on:
+  push:
+    paths:
+      - 'services/jobs-service/**'
+      - '.github/workflows/deploy-jobs.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm i -g serverless@^4 serverless-dotnet
+      - working-directory: services/jobs-service
+        run: |
+          serverless deploy --stage dev

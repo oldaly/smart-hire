@@ -1,0 +1,21 @@
+# .NET build outputs
+bin/
+obj/
+
+# AWS SAM build output
+.aws-sam/
+
+# VS Code and Rider settings
+.vscode/
+.idea/
+
+# user-specific files
+*.user
+*.suo
+
+# local secrets and configs
+*.local
+*.env
+
+# npm/node if any
+node_modules/

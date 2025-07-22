@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Job Service API with Lambda, API Gateway, and DynamoDB
+
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  FrontendOrigin:
+    Type: String
+    Default: http://localhost:4200
+    Description: The allowed origin for CORS (e.g. http://localhost:4200 or https://yourdomain.com)
+
+Globals:
+  Function:
+    Runtime: dotnet6
+    Architectures:
+      - x86_64
+    MemorySize: 256
+    Timeout: 100
+    Environment:
+      Variables:
+        JOBS_TABLE_NAME: smarthire-jobs
+        ALLOWED_ORIGIN: !Ref FrontendOrigin
+
+Resources:
+
+  JobApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowOrigin: !Sub "'${FrontendOrigin}'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowMethods: "'GET,OPTIONS'"
+      Auth: {}
+
+  JobServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src/JobService/
+      Handler: JobService::JobService.Function::FunctionHandler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            Effect: Allow
+            Action:
+              - dynamodb:DescribeTable
+              - dynamodb:GetItem
+              - dynamodb:Scan
+              - dynamodb:Query
+            Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/smarthire-jobs
+      Events:
+        GetJobsApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref JobApi
+            Path: /jobs
+            Method: GET
+
+Outputs:
+  JobServiceApiUrl:
+    Description: "Invoke URL for Prod stage"
+    Value: !Sub "https://${JobApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/jobs"
