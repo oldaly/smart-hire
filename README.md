@@ -15,6 +15,10 @@ The system is composed of several loosely coupled microservices, each responsibl
 
 Each microservice is independently deployable, runs as AWS Lambda functions triggered by API Gateway, SQS queues, or EventBridge events.
 
+## SmartHire Architecture Diagram
+
+![SmartHire Diagram](docs/diagram.png)
+
 ### Key AWS Components
 
 - **AWS Lambda:** Stateless serverless compute for running microservices.
