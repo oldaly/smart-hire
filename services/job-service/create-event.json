@@ -1,0 +1,7 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"id\":\"6\", \"Title\":\"HR partner\", \"Company\":\"Acme Corp\", \"Location\":\"Sydney\", \"Category\":\"HR\"}",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}

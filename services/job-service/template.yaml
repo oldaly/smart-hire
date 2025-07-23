@@ -30,14 +30,14 @@ Resources:
       Cors:
         AllowOrigin: !Sub "'${FrontendOrigin}'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-        AllowMethods: "'GET,OPTIONS'"
+        AllowMethods: "'GET,POST,OPTIONS'"
       Auth: {}
 
-  JobServiceFunction:
+  GetJobsFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./src/JobService/
-      Handler: JobService::JobService.Function::FunctionHandler
+      Handler: JobService::JobService.GetJobsFunction::FunctionHandler
       Policies:
         - AWSLambdaBasicExecutionRole
         - Statement:
@@ -55,6 +55,46 @@ Resources:
             RestApiId: !Ref JobApi
             Path: /jobs
             Method: GET
+
+  GetJobByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src/JobService/
+      Handler: JobService::JobService.GetJobByIdFunction::FunctionHandler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            Effect: Allow
+            Action:
+              - dynamodb:GetItem
+            Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/smarthire-jobs
+      Events:
+        GetJobByIdApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref JobApi
+            Path: /jobs/{id}
+            Method: GET
+
+  CreateJobFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src/JobService/
+      Handler: JobService::JobService.CreateJobFunction::FunctionHandler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            Effect: Allow
+            Action:
+              - dynamodb:PutItem
+            Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/smarthire-jobs
+      Events:
+        CreateJobApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref JobApi
+            Path: /jobs
+            Method: POST
 
 Outputs:
   JobServiceApiUrl:

@@ -8,22 +8,14 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
+using SmartHire.Shared;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace JobService
 {
-    public class Job
-    {
-        public string Id { get; set; } = "";
-        public string Title { get; set; } = "";
-        public string Company { get; set; } = "";
-        public string Location { get; set; } = "";
-        public string Category { get; set; } = "";
-    }
-
-    public class Function
+    public class GetJobsFunction
     {
         private static readonly string TableName = Environment.GetEnvironmentVariable("JOBS_TABLE_NAME")!;
         private static readonly AmazonDynamoDBClient _client = new();
@@ -38,16 +30,7 @@ namespace JobService
             // Handle CORS preflight request
             if (request.HttpMethod == "OPTIONS")
             {
-                return new APIGatewayProxyResponse
-                {
-                    StatusCode = (int)HttpStatusCode.OK,
-                    Headers = new Dictionary<string, string>
-                    {
-                        { "Access-Control-Allow-Origin", allowedOrigin },
-                        { "Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token" },
-                        { "Access-Control-Allow-Methods", "GET,OPTIONS" }
-                    }
-                };
+                return ApiResponseHelper.CreateCorsPreflightResponse(allowedOrigin);
             }
 
             // Read optional "category" query param
@@ -73,18 +56,7 @@ namespace JobService
 
             context.Logger.LogLine($"Returning {jobs.Count} job(s)");
 
-            return new APIGatewayProxyResponse
-            {
-                StatusCode = (int)HttpStatusCode.OK,
-                Body = JsonSerializer.Serialize(jobs),
-                Headers = new Dictionary<string, string>
-                {
-                    { "Content-Type", "application/json" },
-                    { "Access-Control-Allow-Origin", allowedOrigin },
-                    { "Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token" },
-                    { "Access-Control-Allow-Methods", "GET,OPTIONS" }
-                }
-            };
+            return ApiResponseHelper.CreateCorsPreflightResponse(allowedOrigin);
         }
     }
 }

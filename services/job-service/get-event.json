@@ -1,4 +1,5 @@
 {
+  "httpMethod": "GET",
   "queryStringParameters": {
     "category": "Tech"
   }

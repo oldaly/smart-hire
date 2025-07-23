@@ -1,0 +1,24 @@
+{
+  "resource": "/jobs/{id}",
+  "path": "/jobs/5",
+  "httpMethod": "GET",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "multiValueHeaders": {
+    "Content-Type": ["application/json"]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "id": "5"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourcePath": "/jobs/{id}",
+    "httpMethod": "GET",
+    "path": "/Prod/jobs/5"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}
