@@ -56,7 +56,19 @@ namespace JobService
 
             context.Logger.LogLine($"Returning {jobs.Count} job(s)");
 
-            return ApiResponseHelper.CreateCorsPreflightResponse(allowedOrigin);
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = JsonSerializer.Serialize(jobs),
+                Headers = new Dictionary<string, string>
+                {
+                    { "Content-Type", "application/json" },
+                    { "Access-Control-Allow-Origin", allowedOrigin },
+                    { "Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token" },
+                    { "Access-Control-Allow-Methods", "GET,OPTIONS" }
+                }
+            };
+
         }
     }
 }
