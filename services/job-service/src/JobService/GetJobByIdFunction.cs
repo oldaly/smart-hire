@@ -13,11 +13,27 @@ namespace JobService
 {
     public class GetJobByIdFunction
     {
-        private static readonly string TableName = Environment.GetEnvironmentVariable("JOBS_TABLE_NAME")!;
-        private static readonly AmazonDynamoDBClient _client = new();
+        private readonly string _tableName;
+        private readonly AmazonDynamoDBClient _client;
+        private readonly Table _table;
+
+        public GetJobByIdFunction()
+        {
+            try
+            {
+                _tableName = Environment.GetEnvironmentVariable("JOBS_TABLE_NAME") ?? throw new Exception("JOBS_TABLE_NAME env var is missing");
+                _client = new AmazonDynamoDBClient();
 #pragma warning disable CS0618
-        private static readonly Table _table = Table.LoadTable(_client, TableName);
+                _table = Table.LoadTable(_client, _tableName);
 #pragma warning restore CS0618
+            }
+            catch (Exception ex)
+            {
+                // If initialization fails, log and rethrow so Lambda logs capture the cause
+                Console.WriteLine($"Failed to initialize DynamoDB Table: {ex.Message}");
+                throw;
+            }
+        }
 
         public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
         {
